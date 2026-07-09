@@ -129,3 +129,4 @@ What still needs code: layout changes, new page types, new components (globe, et
 | 2026-07-09 | Hosting: Vercel |
 | 2026-07-09 | Dark mode toggle: yes |
 | 2026-07-09 | Palette: Option B "warm paper" (stone grays) over pure mono and true black |
+| 2026-07-09 | Repo: https://github.com/waqar2403/portfolio (public); Vercel import pending |
