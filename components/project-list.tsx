@@ -1,0 +1,89 @@
+"use client";
+
+import { useState } from "react";
+
+export type ProjectItem = {
+  slug: string;
+  title: string;
+  type: "project" | "product";
+  description: string;
+  tech: string[];
+  link?: string;
+  repo?: string;
+  year?: string;
+};
+
+const filters = ["all", "projects", "products"] as const;
+type Filter = (typeof filters)[number];
+
+export function ProjectList({ projects }: { projects: ProjectItem[] }) {
+  const [filter, setFilter] = useState<Filter>("all");
+
+  const visible = projects.filter(
+    (p) =>
+      filter === "all" ||
+      (filter === "projects" && p.type === "project") ||
+      (filter === "products" && p.type === "product"),
+  );
+
+  return (
+    <div>
+      <div className="flex gap-2 font-mono text-xs">
+        {filters.map((f) => (
+          <button
+            key={f}
+            type="button"
+            onClick={() => setFilter(f)}
+            className={`cursor-pointer rounded border px-2 py-1 transition-colors ${
+              filter === f
+                ? "border-foreground bg-foreground text-background"
+                : "border-border text-muted hover:text-foreground"
+            }`}
+          >
+            {f}
+          </button>
+        ))}
+      </div>
+
+      <ul className="mt-8 space-y-8">
+        {visible.map((project) => (
+          <li key={project.slug} className="border-b border-border pb-8 last:border-b-0">
+            <div className="flex items-baseline gap-2">
+              <h2 className="font-medium">{project.title}</h2>
+              <span className="rounded border border-border bg-surface px-1.5 py-0.5 font-mono text-[10px] text-muted">
+                {project.type}
+              </span>
+              {project.year && <span className="font-mono text-xs text-muted">{project.year}</span>}
+            </div>
+            <p className="mt-2 text-sm leading-6 text-muted">{project.description}</p>
+            {project.tech.length > 0 && (
+              <p className="mt-2 font-mono text-xs text-muted">{project.tech.join(" · ")}</p>
+            )}
+            <div className="mt-3 flex gap-4 text-sm">
+              {project.link && (
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline decoration-border underline-offset-4 hover:decoration-foreground"
+                >
+                  visit ↗
+                </a>
+              )}
+              {project.repo && (
+                <a
+                  href={project.repo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline decoration-border underline-offset-4 hover:decoration-foreground"
+                >
+                  source ↗
+                </a>
+              )}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
