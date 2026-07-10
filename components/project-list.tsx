@@ -1,5 +1,6 @@
 "use client";
 
+import { ArrowUpRight } from "lucide-react";
 import { useState } from "react";
 
 export type ProjectItem = {
@@ -34,10 +35,10 @@ export function ProjectList({ projects }: { projects: ProjectItem[] }) {
             key={f}
             type="button"
             onClick={() => setFilter(f)}
-            className={`cursor-pointer rounded border px-2 py-1 transition-colors ${
+            className={`cursor-pointer rounded-full border px-3 py-1 transition-colors ${
               filter === f
                 ? "border-foreground bg-foreground text-background"
-                : "border-border text-muted hover:text-foreground"
+                : "border-border text-muted hover:border-muted hover:text-foreground"
             }`}
           >
             {f}
@@ -45,42 +46,47 @@ export function ProjectList({ projects }: { projects: ProjectItem[] }) {
         ))}
       </div>
 
-      <ul className="mt-8 space-y-8">
+      <ul className="mt-6 space-y-4">
         {visible.map((project) => (
-          <li key={project.slug} className="border-b border-border pb-8 last:border-b-0">
-            <div className="flex items-baseline gap-2">
+          <li
+            key={project.slug}
+            className="rounded-lg border border-border p-5 transition-colors hover:border-muted/50"
+          >
+            <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
               <h2 className="font-medium">{project.title}</h2>
-              <span className="rounded border border-border bg-surface px-1.5 py-0.5 font-mono text-[10px] text-muted">
+              <span className="rounded-full border border-border bg-surface px-2 py-0.5 font-mono text-[10px] text-muted">
                 {project.type}
               </span>
-              {project.year && <span className="font-mono text-xs text-muted">{project.year}</span>}
+              {project.year && <span className="ml-auto font-mono text-xs text-muted">{project.year}</span>}
             </div>
             <p className="mt-2 text-sm leading-6 text-muted">{project.description}</p>
             {project.tech.length > 0 && (
-              <p className="mt-2 font-mono text-xs text-muted">{project.tech.join(" · ")}</p>
+              <p className="mt-2.5 font-mono text-xs text-muted/80">{project.tech.join(" · ")}</p>
             )}
-            <div className="mt-3 flex gap-4 text-sm">
-              {project.link && (
-                <a
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline decoration-border underline-offset-4 hover:decoration-foreground"
-                >
-                  visit ↗
-                </a>
-              )}
-              {project.repo && (
-                <a
-                  href={project.repo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline decoration-border underline-offset-4 hover:decoration-foreground"
-                >
-                  source ↗
-                </a>
-              )}
-            </div>
+            {(project.link || project.repo) && (
+              <div className="mt-3 flex gap-4 text-sm">
+                {project.link && (
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 underline decoration-border underline-offset-4 hover:decoration-foreground"
+                  >
+                    visit <ArrowUpRight size={13} />
+                  </a>
+                )}
+                {project.repo && (
+                  <a
+                    href={project.repo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 underline decoration-border underline-offset-4 hover:decoration-foreground"
+                  >
+                    source <ArrowUpRight size={13} />
+                  </a>
+                )}
+              </div>
+            )}
           </li>
         ))}
       </ul>

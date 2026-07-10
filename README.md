@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# waqar's portfolio
 
-## Getting Started
+Minimal monochrome portfolio — Next.js + Tailwind + MDX, deployed on Vercel.
+**All content is plain `.md`/`.yml` files. Edit a file, push, and the live site
+updates automatically.** Design decisions live in [DESIGN.md](./DESIGN.md).
 
-First, run the development server:
+## Editing content (no code required)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Everything editable lives in `content/`:
+
+| File / folder | What it controls |
+|---|---|
+| `content/site.yml` | Name, tagline, bio, email, social links, footer line, comments + views config |
+| `content/about.mdx` | About page prose (the `<Experience />` tag renders the job cards) |
+| `content/experience/*.md` | One file per job — company, role, period, logo, bullet points |
+| `content/blog/*.mdx` | One file per post |
+| `content/projects/*.md` | One file per project/product (`type: project` or `type: product`) |
+| `content/opensource/*.md` | One file per upstream project, with collapsible contributions |
+| `public/images/` | Images, logos, blog thumbnails |
+
+### Writing a blog post
+
+Create `content/blog/my-post.mdx`:
+
+```md
+---
+title: My new post
+date: "2026-07-10"
+summary: One line shown in the post list.
+image: /images/blog/my-thumb.png   # optional thumbnail (list + top of post)
+---
+
+Regular **markdown**. Images: ![alt](/images/foo.png)
+
+Videos: <YouTube id="dQw4w9WgXcQ" title="..." />
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Adding an open-source contribution
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Inside any `content/opensource/*.md` body:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```mdx
+<Contribution
+  title="What I did"
+  status="merged"                 # merged | in progress | assigned — or omit
+  pr="https://github.com/org/repo/pull/123"      # optional
+  issue="https://github.com/org/repo/issues/45"  # optional
+>
 
-## Learn More
+Detailed explanation (markdown). Shown when the card is expanded.
 
-To learn more about Next.js, take a look at the following resources:
+</Contribution>
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Comments and view counts
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Comments** (GitHub-account comments via [giscus](https://giscus.app), backed by
+  this repo's Discussions): already configured in `site.yml`. One-time activation:
+  install the [giscus app](https://github.com/apps/giscus) on this repo.
+- **Views** ([GoatCounter](https://goatcounter.com), free): sign up, pick a site code,
+  put it in `site.yml` under `goatcounter:`, push. Unique-visit counts then appear on
+  every post.
 
-## Deploy on Vercel
+## Development
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run dev     # http://localhost:3000
+npm run build   # production build
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Deployed on Vercel — every push to `main` goes live.

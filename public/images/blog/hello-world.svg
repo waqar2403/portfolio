@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="hello world terminal">
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e7e5e4" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="500" fill="#fafaf9"/>
+  <rect width="800" height="500" fill="url(#grid)"/>
+  <rect x="100" y="130" width="600" height="240" rx="12" fill="#f5f5f4" stroke="#e7e5e4"/>
+  <circle cx="132" cy="162" r="6" fill="#d6d3d1"/>
+  <circle cx="152" cy="162" r="6" fill="#d6d3d1"/>
+  <circle cx="172" cy="162" r="6" fill="#d6d3d1"/>
+  <text x="132" y="240" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="28" fill="#78716c">$ whoami</text>
+  <text x="132" y="290" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="28" fill="#1c1917">waqar</text>
+  <text x="132" y="340" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="28" fill="#78716c">$ echo "hello, world"<tspan fill="#1c1917"> ▍</tspan></text>
+</svg>

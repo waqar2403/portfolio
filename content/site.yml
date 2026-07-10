@@ -1,3 +1,4 @@
+# Everything on this file is safe to edit — push and the site updates.
 name: Muhammad Waqar
 shortName: waqar
 tagline: software engineer · open source · competitive programming
@@ -11,3 +12,18 @@ socials:
     url: https://github.com/waqar2403
   - label: LinkedIn
     url: https://linkedin.com/in/im-waqar
+footer: content is plain markdown — editable on GitHub
+
+# Blog comments via GitHub (giscus, backed by this repo's Discussions).
+# One-time step to activate: install https://github.com/apps/giscus on the
+# portfolio repo. Remove this block to turn comments off.
+giscus:
+  repo: waqar2403/portfolio
+  repoId: R_kgDOTTNBSw
+  category: Announcements
+  categoryId: DIC_kwDOTTNBS84DA5cv
+
+# Unique-view counts (free, https://goatcounter.com — no database needed).
+# One-time step: sign up there, pick a site code (e.g. "waqar"), paste it
+# below, push. Views then show on every blog post automatically.
+goatcounter: ""

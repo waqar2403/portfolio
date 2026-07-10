@@ -10,9 +10,13 @@ export default function ProjectsPage() {
   const projects = getProjects().map(({ content: _content, featured: _featured, ...rest }) => rest);
 
   return (
-    <div className="py-8">
-      <h1 className="text-lg font-semibold">Projects & Products</h1>
-      <p className="mt-2 text-sm text-muted">Things I&apos;ve built — side projects and shipped products.</p>
+    <div className="py-10">
+      <header className="border-b border-border pb-6">
+        <h1 className="text-2xl font-semibold tracking-tight">Projects &amp; Products</h1>
+        <p className="mt-2 text-sm text-muted">
+          Things I&apos;ve built — side projects and products that shipped to real users.
+        </p>
+      </header>
       <div className="mt-8">
         <ProjectList projects={projects} />
       </div>

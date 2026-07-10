@@ -7,6 +7,13 @@ const CONTENT_DIR = path.join(process.cwd(), "content");
 
 export type Social = { label: string; url: string };
 
+export type GiscusConfig = {
+  repo: string;
+  repoId: string;
+  category: string;
+  categoryId: string;
+};
+
 export type Site = {
   name: string;
   shortName: string;
@@ -14,6 +21,9 @@ export type Site = {
   description: string;
   email: string;
   socials: Social[];
+  footer?: string;
+  giscus?: GiscusConfig;
+  goatcounter?: string;
 };
 
 export type Post = {
@@ -21,6 +31,7 @@ export type Post = {
   title: string;
   date: string;
   summary: string;
+  image?: string;
   content: string;
 };
 
@@ -42,8 +53,20 @@ export type OpenSourceEntry = {
   project: string;
   upstream: string;
   role: string;
+  logo?: string;
   order: number;
-  links: { label: string; url: string }[];
+  content: string;
+};
+
+export type Experience = {
+  slug: string;
+  company: string;
+  role: string;
+  period: string;
+  location: string;
+  url?: string;
+  logo?: string;
+  order: number;
   content: string;
 };
 
@@ -75,6 +98,7 @@ export function getPosts(): Post[] {
       title: data.data.title as string,
       date: data.data.date as string,
       summary: (data.data.summary as string) ?? "",
+      image: data.data.image as string | undefined,
       content: data.content,
     }))
     .sort((a, b) => (a.date < b.date ? 1 : -1));
@@ -108,8 +132,24 @@ export function getOpenSource(): OpenSourceEntry[] {
       project: data.data.project as string,
       upstream: (data.data.upstream as string) ?? "",
       role: (data.data.role as string) ?? "Contributor",
+      logo: data.data.logo as string | undefined,
       order: (data.data.order as number) ?? 99,
-      links: (data.data.links as { label: string; url: string }[]) ?? [],
+      content: data.content,
+    }))
+    .sort((a, b) => a.order - b.order);
+}
+
+export function getExperience(): Experience[] {
+  return readDir("experience")
+    .map(({ slug, data }) => ({
+      slug,
+      company: data.data.company as string,
+      role: (data.data.role as string) ?? "",
+      period: (data.data.period as string) ?? "",
+      location: (data.data.location as string) ?? "",
+      url: data.data.url as string | undefined,
+      logo: data.data.logo as string | undefined,
+      order: (data.data.order as number) ?? 99,
       content: data.content,
     }))
     .sort((a, b) => a.order - b.order);

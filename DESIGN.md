@@ -130,3 +130,8 @@ What still needs code: layout changes, new page types, new components (globe, et
 | 2026-07-09 | Dark mode toggle: yes |
 | 2026-07-09 | Palette: Option B "warm paper" (stone grays) over pure mono and true black |
 | 2026-07-09 | Repo: https://github.com/waqar2403/portfolio (public); Vercel import pending |
+| 2026-07-10 | Design pass v2: section rules, bordered cards, active-nav underline, `~/waqar` wordmark, lucide icons (feedback: "too plain, no clear section definitions") |
+| 2026-07-10 | Company logos on experience cards (about page) + org logos on open source page; entries in `content/experience/*.md` |
+| 2026-07-10 | Open source page: collapsible `<Contribution>` cards — heading + status chip + PR/issue links, click to expand detail |
+| 2026-07-10 | Blog: optional `image:` thumbnail frontmatter (list + post top), back-link on posts |
+| 2026-07-10 | Comments: giscus via repo Discussions (pending giscus app install); views: GoatCounter (pending signup, code goes in site.yml) |

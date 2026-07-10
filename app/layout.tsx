@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import { Nav } from "@/components/nav";
@@ -43,6 +44,13 @@ export default function RootLayout({
           <main className="mx-auto w-full max-w-2xl flex-1 px-6">{children}</main>
           <Footer site={site} />
         </Providers>
+        {site.goatcounter && (
+          <Script
+            data-goatcounter={`https://${site.goatcounter}.goatcounter.com/count`}
+            src="https://gc.zgo.at/count.js"
+            strategy="afterInteractive"
+          />
+        )}
       </body>
     </html>
   );
