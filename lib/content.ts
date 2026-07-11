@@ -31,6 +31,7 @@ export type Post = {
   title: string;
   date: string;
   summary: string;
+  category?: string;
   image?: string;
   content: string;
 };
@@ -98,6 +99,7 @@ export function getPosts(): Post[] {
       title: data.data.title as string,
       date: data.data.date as string,
       summary: (data.data.summary as string) ?? "",
+      category: data.data.category as string | undefined,
       image: data.data.image as string | undefined,
       content: data.content,
     }))
@@ -161,4 +163,9 @@ export function formatDate(date: string): string {
     month: "short",
     day: "numeric",
   });
+}
+
+export function readingTime(content: string): number {
+  const words = content.trim().split(/\s+/).length;
+  return Math.max(1, Math.round(words / 200));
 }

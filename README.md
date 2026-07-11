@@ -27,6 +27,7 @@ Create `content/blog/my-post.mdx`:
 title: My new post
 date: "2026-07-10"
 summary: One line shown in the post list.
+category: workflow                 # optional — becomes a filter pill on /blog
 image: /images/blog/my-thumb.png   # optional thumbnail (list + top of post)
 ---
 

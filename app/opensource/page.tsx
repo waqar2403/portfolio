@@ -13,7 +13,7 @@ export default function OpenSourcePage() {
   return (
     <div className="py-10">
       <header className="border-b border-border pb-6">
-        <h1 className="text-2xl font-semibold tracking-tight">Open Source</h1>
+        <h1 className="font-serif text-[2rem] leading-tight tracking-tight sm:text-[2.25rem]">Open Source</h1>
         <p className="mt-2 text-sm text-muted">
           My upstream contributions, with the context behind each one. Click a contribution to expand
           the details.

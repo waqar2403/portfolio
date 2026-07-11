@@ -25,8 +25,10 @@ export default function Home() {
   return (
     <div className="py-10">
       <section>
-        <h1 className="text-3xl font-semibold tracking-tight">{site.name}</h1>
-        <p className="mt-2 font-mono text-sm text-muted">{site.tagline}</p>
+        <h1 className="font-serif text-[2.75rem] leading-[1.1] tracking-tight sm:text-[3.25rem]">
+          {site.name}
+        </h1>
+        <p className="mt-3 font-mono text-sm text-muted">{site.tagline}</p>
         <p className="mt-6 max-w-prose leading-7">{site.description}</p>
         <div className="mt-6 flex flex-wrap gap-2">
           {site.socials.map((s) => (
@@ -43,12 +45,12 @@ export default function Home() {
             <li key={post.slug}>
               <Link
                 href={`/blog/${post.slug}`}
-                className="group -mx-3 flex items-baseline justify-between gap-4 rounded-md px-3 py-2 transition-colors hover:bg-surface"
+                className="group -mx-4 flex items-baseline justify-between gap-4 rounded-lg px-4 py-3 transition-colors hover:bg-surface"
               >
-                <span className="underline decoration-border underline-offset-4 group-hover:decoration-foreground">
+                <span className="font-medium underline decoration-border underline-offset-4 group-hover:decoration-foreground">
                   {post.title}
                 </span>
-                <span className="shrink-0 font-mono text-xs text-muted">{formatDate(post.date)}</span>
+                <span className="shrink-0 font-mono text-[11px] text-muted">{formatDate(post.date)}</span>
               </Link>
             </li>
           ))}

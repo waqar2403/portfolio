@@ -24,8 +24,9 @@
   --color-muted: var(--muted);
   --color-border: var(--border);
   --color-surface: var(--surface);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-instrument-serif);
+  --font-mono: var(--font-jetbrains-mono);
 }
 
 body {
@@ -56,15 +57,18 @@ body {
 .prose h2,
 .prose h3,
 .prose h4 {
-  font-weight: 600;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.01em;
   margin-top: 2em;
   margin-bottom: 0.75em;
+  scroll-margin-top: 5rem;
 }
 .prose h2 {
-  font-size: 1.25rem;
+  font-size: 1.625rem;
 }
 .prose h3 {
-  font-size: 1.0625rem;
+  font-size: 1.3125rem;
 }
 .prose a {
   text-decoration: underline;

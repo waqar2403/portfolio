@@ -9,7 +9,7 @@ type Props = {
 export function SectionHeading({ label, href, linkLabel }: Props) {
   return (
     <div className="flex items-center gap-3">
-      <h2 className="shrink-0 font-mono text-xs uppercase tracking-[0.18em] text-muted">{label}</h2>
+      <h2 className="shrink-0 font-mono text-[11px] uppercase tracking-[0.15em] text-muted">{label}</h2>
       <span className="h-px flex-1 bg-border" aria-hidden />
       {href && linkLabel && (
         <Link

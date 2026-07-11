@@ -12,7 +12,9 @@ export default function ProjectsPage() {
   return (
     <div className="py-10">
       <header className="border-b border-border pb-6">
-        <h1 className="text-2xl font-semibold tracking-tight">Projects &amp; Products</h1>
+        <h1 className="font-serif text-[2rem] leading-tight tracking-tight sm:text-[2.25rem]">
+          Projects &amp; Products
+        </h1>
         <p className="mt-2 text-sm text-muted">
           Things I&apos;ve built — side projects and products that shipped to real users.
         </p>

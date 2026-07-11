@@ -1,4 +1,5 @@
 import { MDXRemote } from "next-mdx-remote/rsc";
+import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 import { Contribution } from "./contribution";
 import { Experience } from "./experience";
@@ -17,7 +18,7 @@ export function Mdx({ source }: { source: string }) {
       <MDXRemote
         source={source}
         components={components}
-        options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}
+        options={{ mdxOptions: { remarkPlugins: [remarkGfm], rehypePlugins: [rehypeSlug] } }}
       />
     </div>
   );

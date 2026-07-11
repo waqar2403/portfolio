@@ -64,9 +64,11 @@ Swapping later = editing the 10 hex values in `app/globals.css`.
 | `surface` | `#1C1917` | code blocks, tags |
 
 ### Typography
-- **UI + body:** Geist Sans (or Inter) — clean, neutral, free.
-- **Code + dates/metadata:** Geist Mono — gives the site its "engineer" character.
-- Body text ~16–18px, max line width ~65–70ch (single centered column, like kakkoyun.me).
+Updated 2026-07-10 to match junaidshaukat.com (user request):
+- **Display / headings:** Instrument Serif (weight 400 only) — page titles, post titles, prose h2/h3.
+- **UI + body:** Inter.
+- **Code + dates/metadata:** JetBrains Mono.
+- Body text ~16px, max line width ~65–70ch (single centered column).
 
 ## 5. Structure / sitemap
 
@@ -135,3 +137,6 @@ What still needs code: layout changes, new page types, new components (globe, et
 | 2026-07-10 | Open source page: collapsible `<Contribution>` cards — heading + status chip + PR/issue links, click to expand detail |
 | 2026-07-10 | Blog: optional `image:` thumbnail frontmatter (list + post top), back-link on posts |
 | 2026-07-10 | Comments: giscus via repo Discussions (pending giscus app install); views: GoatCounter (pending signup, code goes in site.yml) |
+| 2026-07-10 | Fonts copied from junaidshaukat.com: Instrument Serif (headings) + Inter (body) + JetBrains Mono (meta) |
+| 2026-07-10 | Blog: `category:` frontmatter → filter pills on /blog (like projects), chip + reading time in list/post header |
+| 2026-07-10 | Post page: "N min read" + sticky "On this page" scroll-spy TOC in right margin (xl screens; rehype-slug anchors) |
