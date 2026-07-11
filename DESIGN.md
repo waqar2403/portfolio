@@ -144,3 +144,4 @@ What still needs code: layout changes, new page types, new components (globe, et
 | 2026-07-10 | Open source reordered per feedback: featured first (lighter left-rail design, no boxed cards), then flat PR feed newest→oldest, heatmap at the very end; stat tiles removed |
 | 2026-07-10 | PR feed categorized project-wise: groups ordered by most recent activity, PRs newest→oldest within each, merged count per repo |
 | 2026-07-10 | Blog list restyled (junaid /blog): stacked cards, big 5:2 thumbnail on top with category badge overlay + hover zoom, then date · reading time · title · summary below; year grouping dropped |
+| 2026-07-10 | TOC fix: sidebar was xl-only (≥1280px) so it vanished on laptops. Added collapsible "On this page" at top of post for <xl; sidebar kept for ≥xl. Needs `##`/`###` headings in the post to appear. |

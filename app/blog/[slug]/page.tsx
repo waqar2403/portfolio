@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Comments } from "@/components/comments";
 import { Mdx } from "@/components/mdx";
 import { Toc } from "@/components/toc";
+import { TocInline } from "@/components/toc-inline";
 import { Views } from "@/components/views";
 import { formatDate, getPost, getPosts, getSite, readingTime } from "@/lib/content";
 import { extractToc } from "@/lib/toc";
@@ -67,6 +68,7 @@ export default async function PostPage({ params }: Props) {
       )}
 
       <div className="mt-8">
+        <TocInline items={toc} />
         <Mdx source={post.content} />
       </div>
 
