@@ -140,3 +140,4 @@ What still needs code: layout changes, new page types, new components (globe, et
 | 2026-07-10 | Fonts copied from junaidshaukat.com: Instrument Serif (headings) + Inter (body) + JetBrains Mono (meta) |
 | 2026-07-10 | Blog: `category:` frontmatter → filter pills on /blog (like projects), chip + reading time in list/post header |
 | 2026-07-10 | Post page: "N min read" + sticky "On this page" scroll-spy TOC in right margin (xl screens; rehype-slug anchors) |
+| 2026-07-10 | Open source page split in two (junaid-style): auto-fetched GitHub report (stat tiles, monochrome contribution heatmap, repo-grouped recent PRs, "auto · daily" badge, ISR 1d) + hand-written featured contributions below |

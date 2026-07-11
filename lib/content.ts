@@ -24,6 +24,7 @@ export type Site = {
   footer?: string;
   giscus?: GiscusConfig;
   goatcounter?: string;
+  githubUsername?: string;
 };
 
 export type Post = {

@@ -15,7 +15,7 @@ Everything editable lives in `content/`:
 | `content/experience/*.md` | One file per job — company, role, period, logo, bullet points |
 | `content/blog/*.mdx` | One file per post |
 | `content/projects/*.md` | One file per project/product (`type: project` or `type: product`) |
-| `content/opensource/*.md` | One file per upstream project, with collapsible contributions |
+| `content/opensource/*.md` | Featured contributions — one file per upstream project, with collapsible write-ups |
 | `public/images/` | Images, logos, blog thumbnails |
 
 ### Writing a blog post
@@ -52,6 +52,18 @@ Detailed explanation (markdown). Shown when the card is expanded.
 
 </Contribution>
 ```
+
+### The open source page
+
+Two halves:
+
+1. **GitHub report (automatic)** — stat tiles, the contribution heatmap, and recent
+   pull requests grouped by repo, all fetched from the public GitHub API for the
+   `githubUsername` set in `site.yml`. Refreshes about once a day on its own; no
+   editing needed. (Optional: set a `GITHUB_TOKEN` env var on Vercel for higher API
+   rate limits — works fine without it.)
+2. **Featured contributions (hand-written)** — the curated write-ups in
+   `content/opensource/*.md`.
 
 ### Comments and view counts
 

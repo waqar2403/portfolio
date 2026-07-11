@@ -14,6 +14,10 @@ socials:
     url: https://linkedin.com/in/im-waqar
 footer: content is plain markdown — editable on GitHub
 
+# Powers the auto-fetched report on the open source page (stat tiles,
+# contribution graph, recent pull requests). Refreshes about once a day.
+githubUsername: waqar2403
+
 # Blog comments via GitHub (giscus, backed by this repo's Discussions).
 # One-time step to activate: install https://github.com/apps/giscus on the
 # portfolio repo. Remove this block to turn comments off.
