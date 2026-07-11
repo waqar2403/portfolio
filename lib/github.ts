@@ -1,6 +1,6 @@
-// Auto-fetched GitHub report for the open source page. All data is public;
-// requests are cached for a day (ISR), so the section stays fresh without
-// rebuilds. Every fetcher fails soft — a null return hides its section.
+// Auto-fetched GitHub data for the open source page. All data is public;
+// requests are cached for a day (ISR), so the sections stay fresh without
+// rebuilds. Every fetcher fails soft — a null/empty return hides its section.
 
 const API = "https://api.github.com";
 const DAY = 86400;
@@ -22,25 +22,13 @@ async function gh<T>(path: string): Promise<T | null> {
   }
 }
 
-export type GithubStats = {
-  repos: number;
-  stars: number;
-  followers: number;
-  mergedPrs: number;
-};
-
 export type PrItem = {
+  repo: string;
+  repoUrl: string;
   title: string;
   url: string;
   date: string;
   state: "merged" | "open";
-};
-
-export type RepoGroup = {
-  repo: string;
-  url: string;
-  mergedCount: number;
-  prs: PrItem[];
 };
 
 type SearchItem = {
@@ -53,63 +41,35 @@ type SearchItem = {
 
 type SearchResult = { items: SearchItem[] };
 
-export type GithubReport = {
-  stats: GithubStats | null;
-  groups: RepoGroup[];
-};
+const LIST_LIMIT = 20;
 
-const PER_REPO_LIMIT = 6;
-
-export async function getGithubReport(username: string): Promise<GithubReport> {
+// PRs the user authored in other people's repos, newest first.
+export async function getRecentPrs(username: string): Promise<PrItem[]> {
   const q = (extra: string) => encodeURIComponent(`author:${username} type:pr ${extra}`);
-  const [user, repos, merged, open] = await Promise.all([
-    gh<{ public_repos: number; followers: number }>(`/users/${username}`),
-    gh<{ stargazers_count: number }[]>(`/users/${username}/repos?per_page=100&type=owner`),
+  const [merged, open] = await Promise.all([
     gh<SearchResult>(`/search/issues?q=${q("is:merged")}&per_page=100`),
     gh<SearchResult>(`/search/issues?q=${q("is:open")}&per_page=100`),
   ]);
 
-  const toPr = (item: SearchItem, state: "merged" | "open"): PrItem & { repo: string } => ({
-    repo: item.repository_url.replace(`${API}/repos/`, ""),
-    title: item.title,
-    url: item.html_url,
-    date: item.closed_at ?? item.created_at,
-    state,
-  });
+  const toPr = (item: SearchItem, state: "merged" | "open"): PrItem => {
+    const repo = item.repository_url.replace(`${API}/repos/`, "");
+    return {
+      repo,
+      repoUrl: `https://github.com/${repo}`,
+      title: item.title,
+      url: item.html_url,
+      date: item.closed_at ?? item.created_at,
+      state,
+    };
+  };
 
-  // Upstream contributions only — skip PRs against the user's own repos.
-  const all = [
+  return [
     ...(merged?.items ?? []).map((i) => toPr(i, "merged")),
     ...(open?.items ?? []).map((i) => toPr(i, "open")),
-  ].filter((pr) => !pr.repo.toLowerCase().startsWith(`${username.toLowerCase()}/`));
-
-  const byRepo = new Map<string, (PrItem & { repo: string })[]>();
-  for (const pr of all) byRepo.set(pr.repo, [...(byRepo.get(pr.repo) ?? []), pr]);
-
-  const groups: RepoGroup[] = [...byRepo.entries()]
-    .map(([repo, prs]) => ({
-      repo,
-      url: `https://github.com/${repo}`,
-      mergedCount: prs.filter((p) => p.state === "merged").length,
-      prs: prs
-        .sort((a, b) => (a.date < b.date ? 1 : -1))
-        .slice(0, PER_REPO_LIMIT)
-        .map(({ repo: _repo, ...pr }) => pr),
-    }))
-    .sort((a, b) => b.mergedCount - a.mergedCount || b.prs.length - a.prs.length);
-
-  const mergedUpstream = all.filter((p) => p.state === "merged").length;
-  const stats: GithubStats | null =
-    user && repos
-      ? {
-          repos: user.public_repos,
-          stars: repos.reduce((sum, r) => sum + r.stargazers_count, 0),
-          followers: user.followers,
-          mergedPrs: mergedUpstream,
-        }
-      : null;
-
-  return { stats, groups };
+  ]
+    .filter((pr) => !pr.repo.toLowerCase().startsWith(`${username.toLowerCase()}/`))
+    .sort((a, b) => (a.date < b.date ? 1 : -1))
+    .slice(0, LIST_LIMIT);
 }
 
 export type CalendarDay = { date: string; level: number; dow: number };

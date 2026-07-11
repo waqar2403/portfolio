@@ -26,7 +26,7 @@ function HeaderLink({
       target="_blank"
       rel="noopener noreferrer"
       onClick={(e) => e.stopPropagation()}
-      className="inline-flex items-center gap-1 font-mono text-xs text-muted underline decoration-border underline-offset-4 transition-colors hover:text-foreground hover:decoration-foreground"
+      className="inline-flex items-center gap-1 font-mono text-[11px] text-muted underline decoration-border underline-offset-4 transition-colors hover:text-foreground hover:decoration-foreground"
     >
       {icon}
       {label}
@@ -38,7 +38,11 @@ export function Contribution({ title, pr, issue, status, children }: Props) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="not-prose my-3 overflow-hidden rounded-lg border border-border transition-colors hover:border-muted/50">
+    <div
+      className={`my-5 border-l-2 pl-4 transition-colors ${
+        open ? "border-foreground/60" : "border-border hover:border-muted/70"
+      }`}
+    >
       <div
         role="button"
         tabIndex={0}
@@ -50,31 +54,33 @@ export function Contribution({ title, pr, issue, status, children }: Props) {
             setOpen((o) => !o);
           }
         }}
-        className="cursor-pointer px-4 py-3 transition-colors hover:bg-surface"
+        className="group cursor-pointer"
       >
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-baseline gap-2">
           <ChevronRight
-            size={14}
-            className={`shrink-0 text-muted transition-transform duration-200 ${open ? "rotate-90" : ""}`}
+            size={13}
+            className={`relative top-0.5 shrink-0 text-muted transition-transform duration-200 group-hover:text-foreground ${
+              open ? "rotate-90" : ""
+            }`}
           />
-          <h3 className="flex-1 text-sm font-medium leading-snug">{title}</h3>
+          <span className="flex-1 text-[15px] font-medium leading-snug group-hover:text-foreground">
+            {title}
+          </span>
           {status && (
-            <span className="shrink-0 rounded-full border border-border bg-surface px-2 py-0.5 font-mono text-[10px] text-muted">
+            <span className="shrink-0 font-mono text-[10px] uppercase tracking-wider text-muted">
               {status}
             </span>
           )}
         </div>
         {(pr || issue) && (
-          <div className="mt-1.5 flex flex-wrap gap-4 pl-[26px]">
-            {pr && <HeaderLink href={pr} icon={<GitPullRequest size={12} />} label={`PR #${pr.split("/").pop()}`} />}
-            {issue && <HeaderLink href={issue} icon={<CircleDot size={12} />} label={`issue #${issue.split("/").pop()}`} />}
+          <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 pl-[21px]">
+            {pr && <HeaderLink href={pr} icon={<GitPullRequest size={11} />} label={`PR #${pr.split("/").pop()}`} />}
+            {issue && <HeaderLink href={issue} icon={<CircleDot size={11} />} label={`issue #${issue.split("/").pop()}`} />}
           </div>
         )}
       </div>
       {open && (
-        <div className="border-t border-border bg-surface/40 px-4 py-4">
-          <div className="prose text-sm leading-6">{children}</div>
-        </div>
+        <div className="prose mt-3 pl-[21px] text-sm leading-6 text-muted">{children}</div>
       )}
     </div>
   );

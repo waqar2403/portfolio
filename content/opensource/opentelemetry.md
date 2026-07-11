@@ -26,13 +26,13 @@ with zero changes to user code.
 
 <Contribution
   title="Version-matrix release gating"
-  status="in progress"
+  status="merged"
   pr="https://github.com/open-telemetry/opentelemetry-go-compile-instrumentation/pull/581"
   issue="https://github.com/open-telemetry/opentelemetry-go-compile-instrumentation/issues/578"
 >
 
 Instrumentation that patches a third-party library is only safe within the version
-ranges it was written for. I'm building a version-matrix test harness that exercises
+ranges it was written for. I built a version-matrix test harness that exercises
 each instrumentation against the full range of library versions it claims to support,
 so releases are gated on the declared compatibility actually holding — catching silent
 breakage when upstream libraries change internals.
