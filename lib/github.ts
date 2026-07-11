@@ -41,10 +41,19 @@ type SearchItem = {
 
 type SearchResult = { items: SearchItem[] };
 
-const LIST_LIMIT = 20;
+export type PrGroup = {
+  repo: string;
+  repoUrl: string;
+  mergedCount: number;
+  latest: string;
+  prs: PrItem[];
+};
 
-// PRs the user authored in other people's repos, newest first.
-export async function getRecentPrs(username: string): Promise<PrItem[]> {
+const PER_REPO_LIMIT = 6;
+
+// PRs the user authored in other people's repos, grouped by repo. Groups are
+// ordered by their most recent PR; PRs inside a group run newest to oldest.
+export async function getRecentPrGroups(username: string): Promise<PrGroup[]> {
   const q = (extra: string) => encodeURIComponent(`author:${username} type:pr ${extra}`);
   const [merged, open] = await Promise.all([
     gh<SearchResult>(`/search/issues?q=${q("is:merged")}&per_page=100`),
@@ -63,13 +72,25 @@ export async function getRecentPrs(username: string): Promise<PrItem[]> {
     };
   };
 
-  return [
+  const all = [
     ...(merged?.items ?? []).map((i) => toPr(i, "merged")),
     ...(open?.items ?? []).map((i) => toPr(i, "open")),
   ]
     .filter((pr) => !pr.repo.toLowerCase().startsWith(`${username.toLowerCase()}/`))
-    .sort((a, b) => (a.date < b.date ? 1 : -1))
-    .slice(0, LIST_LIMIT);
+    .sort((a, b) => (a.date < b.date ? 1 : -1));
+
+  const byRepo = new Map<string, PrItem[]>();
+  for (const pr of all) byRepo.set(pr.repo, [...(byRepo.get(pr.repo) ?? []), pr]);
+
+  return [...byRepo.entries()]
+    .map(([repo, prs]) => ({
+      repo,
+      repoUrl: `https://github.com/${repo}`,
+      mergedCount: prs.filter((p) => p.state === "merged").length,
+      latest: prs[0].date,
+      prs: prs.slice(0, PER_REPO_LIMIT),
+    }))
+    .sort((a, b) => (a.latest < b.latest ? 1 : -1));
 }
 
 export type CalendarDay = { date: string; level: number; dow: number };

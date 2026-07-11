@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { ContributionGraph } from "@/components/contribution-graph";
 import { Mdx } from "@/components/mdx";
 import { formatDate, getOpenSource, getSite } from "@/lib/content";
-import { getContributionCalendar, getRecentPrs } from "@/lib/github";
+import { getContributionCalendar, getRecentPrGroups } from "@/lib/github";
 
 export const metadata: Metadata = {
   title: "Open Source",
@@ -38,8 +38,8 @@ export default async function OpenSourcePage() {
   const site = getSite();
   const entries = getOpenSource();
   const username = site.githubUsername;
-  const [prs, calendar] = username
-    ? await Promise.all([getRecentPrs(username), getContributionCalendar(username)])
+  const [prGroups, calendar] = username
+    ? await Promise.all([getRecentPrGroups(username), getContributionCalendar(username)])
     : [[], null];
 
   return (
@@ -87,35 +87,54 @@ export default async function OpenSourcePage() {
         </div>
       </section>
 
-      {prs.length > 0 && (
+      {prGroups.length > 0 && (
         <section className="mt-6">
           <Rule label="recent pull requests" badge />
-          <ul className="mt-4">
-            {prs.map((pr) => (
-              <li key={pr.url}>
-                <a
-                  href={pr.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group -mx-4 flex items-baseline justify-between gap-4 rounded-lg px-4 py-2.5 transition-colors hover:bg-surface"
-                >
-                  <span className="min-w-0">
-                    <span className="text-sm font-medium underline decoration-border underline-offset-4 group-hover:decoration-foreground">
-                      {pr.title}
-                    </span>
-                    <span className="mt-0.5 block font-mono text-[11px] text-muted">{pr.repo}</span>
-                  </span>
-                  <span
-                    className={`shrink-0 font-mono text-[11px] text-muted ${
-                      pr.state === "open" ? "rounded-full border border-border px-2 py-px" : ""
-                    }`}
+          <div className="mt-6 space-y-8">
+            {prGroups.map((group) => (
+              <div key={group.repo}>
+                <div className="flex items-baseline justify-between gap-3">
+                  <a
+                    href={group.repoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex min-w-0 items-center gap-1 font-mono text-[13px] font-medium underline decoration-border underline-offset-4 hover:decoration-foreground"
                   >
-                    {pr.state === "open" ? "open" : formatDate(pr.date)}
-                  </span>
-                </a>
-              </li>
+                    <span className="truncate">{group.repo}</span>
+                    <ArrowUpRight size={11} className="shrink-0 text-muted" />
+                  </a>
+                  {group.mergedCount > 0 && (
+                    <span className="shrink-0 font-mono text-[11px] text-muted">
+                      {group.mergedCount} merged
+                    </span>
+                  )}
+                </div>
+                <ul className="mt-1.5">
+                  {group.prs.map((pr) => (
+                    <li key={pr.url}>
+                      <a
+                        href={pr.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group -mx-4 flex items-baseline justify-between gap-4 rounded-lg px-4 py-2 transition-colors hover:bg-surface"
+                      >
+                        <span className="min-w-0 truncate text-sm underline decoration-border underline-offset-4 group-hover:decoration-foreground">
+                          {pr.title}
+                        </span>
+                        <span
+                          className={`shrink-0 font-mono text-[11px] text-muted ${
+                            pr.state === "open" ? "rounded-full border border-border px-2 py-px" : ""
+                          }`}
+                        >
+                          {pr.state === "open" ? "open" : formatDate(pr.date)}
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
-          </ul>
+          </div>
         </section>
       )}
 

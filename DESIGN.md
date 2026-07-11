@@ -142,3 +142,4 @@ What still needs code: layout changes, new page types, new components (globe, et
 | 2026-07-10 | Post page: "N min read" + sticky "On this page" scroll-spy TOC in right margin (xl screens; rehype-slug anchors) |
 | 2026-07-10 | Open source page split in two (junaid-style): auto-fetched GitHub report (stat tiles, monochrome contribution heatmap, repo-grouped recent PRs, "auto · daily" badge, ISR 1d) + hand-written featured contributions below |
 | 2026-07-10 | Open source reordered per feedback: featured first (lighter left-rail design, no boxed cards), then flat PR feed newest→oldest, heatmap at the very end; stat tiles removed |
+| 2026-07-10 | PR feed categorized project-wise: groups ordered by most recent activity, PRs newest→oldest within each, merged count per repo |
